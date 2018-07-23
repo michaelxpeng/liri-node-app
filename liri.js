@@ -80,3 +80,13 @@ function omdbCommand() {
 }
 
 // do-what-it-says
+if (command === "do-what-it-says") {
+  fs.readFile('random.txt', "utf8", function(error, data){
+    if (!error) {
+      var text = data.split(',');
+      console.log(text[1]);
+      title = text[1];
+      spotifySong(title);
+    }
+  });
+};
