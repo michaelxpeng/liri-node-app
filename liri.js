@@ -9,6 +9,15 @@ var command = process.argv[2];
 var client = new twitter(keys.twitter);
 var spotify = new spotify(keys.spotify);
 
+var title = "";
+for (var i = 3; i < process.argv.length; i ++) {
+  if (i > 3 && i < process.argv.length){
+    title = title + "+" + process.argv[i];
+  } else {
+    title = title + process.argv[i];
+  }
+};
+
 // my-tweets
 if (command === "my-tweets"){
   showTweets();
@@ -33,7 +42,7 @@ if (command === "spotify-this-song") {
 };
 
 function spotifySong (){
-  spotify.search({ type: 'track', query: 'All the Small Things', limit: 5 }, function(err, data) {
+  spotify.search({ type: 'track', query: title, limit: 5 }, function(err, data) {
     if (!err) {
       for(var i = 0; i < data.tracks.items.length; i++){
         var trackData = data.tracks.items[i];
@@ -54,7 +63,7 @@ if (command === "movie-this"){
 
 function omdbCommand() {
 
-  request("http://www.omdbapi.com/?t=frozen&y=&plot=short&apikey=trilogy", function(error, response, body) {
+  request("http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy", function(error, response, body) {
 
     if (!error && response.statusCode === 200) {
       var body = JSON.parse(body);
@@ -71,4 +80,3 @@ function omdbCommand() {
 }
 
 // do-what-it-says
-
