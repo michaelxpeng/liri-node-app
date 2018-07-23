@@ -7,6 +7,7 @@ var request = require('request');
 var fs = require('fs');
 var command = process.argv[2];
 var client = new twitter(keys.twitter);
+var spotify = new spotify(keys.spotify);
 
 // my-tweets
 if (command === "my-tweets"){
@@ -27,7 +28,24 @@ function showTweets() {
 };
 
 // spotify-this-song
+if (command === "spotify-this-song") {
+  spotifySong();
+};
 
+function spotifySong (){
+  spotify.search({ type: 'track', query: 'All the Small Things', limit: 5 }, function(err, data) {
+    if (!err) {
+      for(var i = 0; i < data.tracks.items.length; i++){
+        var trackData = data.tracks.items[i];
+
+        console.log("Artist: " + trackData.artists[0].name);
+        console.log("Song: " + trackData.name);
+        console.log("Preview URL: " + trackData.preview_url);
+        console.log("Album: " + trackData.album.name);
+      }
+    }
+  });
+};
 
 // movie-this
 if (command === "movie-this"){
@@ -39,14 +57,15 @@ function omdbCommand() {
   request("http://www.omdbapi.com/?t=frozen&y=&plot=short&apikey=trilogy", function(error, response, body) {
 
     if (!error && response.statusCode === 200) {
+      var body = JSON.parse(body);
 
-      console.log("Title: " + JSON.parse(body).Title);
-      console.log("Release Year: " + JSON.parse(body).Year);
-      console.log("IMdB Rating: " + JSON.parse(body).imdbRating);
-      console.log("Country: " + JSON.parse(body).Country);
-      console.log("Language: " + JSON.parse(body).Language);
-      console.log("Plot: " + JSON.parse(body).Plot);
-      console.log("Actors: " + JSON.parse(body).Actors);
+      console.log("Title: " + body.Title);
+      console.log("Release Year: " + body.Year);
+      console.log("IMdB Rating: " + body.imdbRating);
+      console.log("Country: " + body.Country);
+      console.log("Language: " + body.Language);
+      console.log("Plot: " + body.Plot);
+      console.log("Actors: " + body.Actors);
     }
   });
 }
