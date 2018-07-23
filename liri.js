@@ -30,6 +30,8 @@ function showTweets() {
       for(var i = 0; i<tweets.length; i++){
         var date = tweets[i].created_at;
         console.log("@fauxmscott: " + tweets[i].text + " Created At: " + date.substring(0, 19));
+
+        fs.appendFile("log.txt", "@fauxmscott: " + tweets[i].text + " Created At: " + date.substring(0, 19) + "\n", function() {});
       }
     }
   });
@@ -42,7 +44,7 @@ if (command === "spotify-this-song") {
 };
 
 function spotifySong (){
-  spotify.search({ type: 'track', query: title, limit: 5 }, function(err, data) {
+  spotify.search({ type: "track", query: title, limit: 5 }, function(err, data) {
     if (!err) {
       for(var i = 0; i < data.tracks.items.length; i++){
         var trackData = data.tracks.items[i];
@@ -51,6 +53,11 @@ function spotifySong (){
         console.log("Song: " + trackData.name);
         console.log("Preview URL: " + trackData.preview_url);
         console.log("Album: " + trackData.album.name);
+
+        fs.appendFile("log.txt", "Artist: " + trackData.artists[0].name + "\n", function() {});
+        fs.appendFile("log.txt", "Song: " + trackData.name + "\n", function() {});
+        fs.appendFile("log.txt", "Preview URL: " + trackData.preview_url + "\n", function() {});
+        fs.appendFile("log.txt", "Album: " + trackData.album.name + "\n", function() {});
       }
     }
   });
@@ -75,6 +82,14 @@ function omdbCommand() {
       console.log("Language: " + body.Language);
       console.log("Plot: " + body.Plot);
       console.log("Actors: " + body.Actors);
+
+      fs.appendFile("log.txt", "Title: " + body.Title + "\n", function() {});
+      fs.appendFile("log.txt", "Release Year: " + body.Year + "\n", function() {});
+      fs.appendFile("log.txt", "IMdB Rating: " + body.imdbRating + "\n", function() {});
+      fs.appendFile("log.txt", "Country: " + body.Country + "\n", function() {});
+      fs.appendFile("log.txt", "Language: " + body.Language + "\n", function() {});
+      fs.appendFile("log.txt", "Plot: " + body.Plot + "\n", function() {});
+      fs.appendFile("log.txt", "Actors: " + body.Actors + "\n", function() {});
     }
   });
 }
