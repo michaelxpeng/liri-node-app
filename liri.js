@@ -6,8 +6,25 @@ var twitter = require('twitter');
 var request = require('request');
 var fs = require('fs');
 var command = process.argv[2];
+var client = new twitter(keys.twitter);
 
 // my-tweets
+if (command === "my-tweets"){
+  showTweets();
+};
+
+function showTweets() {
+  var params = {screen_name: 'fauxmscott'};
+  client.get('statuses/user_timeline', params, function(error, tweets, response) {
+    if (!error) {
+      for(var i = 0; i<tweets.length; i++){
+        var date = tweets[i].created_at;
+        console.log("@fauxmscott: " + tweets[i].text + " Created At: " + date.substring(0, 19));
+      }
+    }
+  });
+  
+};
 
 // spotify-this-song
 
