@@ -18,10 +18,27 @@ for (var i = 3; i < process.argv.length; i++) {
   }
 };
 
-// my-tweets
-if (command === "my-tweets") {
-  showTweets();
-};
+switch (command) {
+  // my-tweets
+  case "my-tweets":
+    showTweets();
+    break;
+
+  // spotify-this-song
+  case "spotify-this-song":
+    spotifySong();
+    break;
+
+  // movie-this
+  case "movie-this":
+    omdbMovie();
+    break;
+
+  // do-what-it-says
+  case "do-what-it-says":
+    doWhatItSays();
+    break;
+}
 
 function showTweets() {
   var params = {
@@ -33,7 +50,7 @@ function showTweets() {
         var date = tweets[i].created_at;
         console.log("@fauxmscott: " + tweets[i].text + " Created At: " + date.substring(0, 19));
 
-        fs.appendFile("log.txt", "@fauxmscott: " + tweets[i].text + " Created At: " + date.substring(0, 19), function () {});
+        fs.appendFile("log.txt", "@fauxmscott: " + tweets[i].text + " Created At: " + date.substring(0, 19) + "\n", function () { });
       };
     }
     else {
@@ -41,11 +58,6 @@ function showTweets() {
     };
   });
 
-};
-
-// spotify-this-song
-if (command === "spotify-this-song") {
-  spotifySong();
 };
 
 function spotifySong() {
@@ -63,10 +75,10 @@ function spotifySong() {
         console.log("Preview URL: " + trackData.preview_url);
         console.log("Album: " + trackData.album.name);
 
-        fs.appendFile("log.txt", "Artist: " + trackData.artists[0].name + "\n", function () {});
-        fs.appendFile("log.txt", "Song: " + trackData.name + "\n", function () {});
-        fs.appendFile("log.txt", "Preview URL: " + trackData.preview_url + "\n", function () {});
-        fs.appendFile("log.txt", "Album: " + trackData.album.name + "\n", function () {});
+        fs.appendFile("log.txt", "Artist: " + trackData.artists[0].name + "\n", function () { });
+        fs.appendFile("log.txt", "Song: " + trackData.name + "\n", function () { });
+        fs.appendFile("log.txt", "Preview URL: " + trackData.preview_url + "\n", function () { });
+        fs.appendFile("log.txt", "Album: " + trackData.album.name + "\n", function () { });
       }
     }
     else {
@@ -75,12 +87,7 @@ function spotifySong() {
   });
 };
 
-// movie-this
-if (command === "movie-this") {
-  omdbCommand();
-};
-
-function omdbCommand() {
+function omdbMovie() {
 
   request("http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
 
@@ -95,13 +102,13 @@ function omdbCommand() {
       console.log("Plot: " + body.Plot);
       console.log("Actors: " + body.Actors);
 
-      fs.appendFile("log.txt", "Title: " + body.Title + "\n", function () {});
-      fs.appendFile("log.txt", "Release Year: " + body.Year + "\n", function () {});
-      fs.appendFile("log.txt", "IMdB Rating: " + body.imdbRating + "\n", function () {});
-      fs.appendFile("log.txt", "Country: " + body.Country + "\n", function () {});
-      fs.appendFile("log.txt", "Language: " + body.Language + "\n", function () {});
-      fs.appendFile("log.txt", "Plot: " + body.Plot + "\n", function () {});
-      fs.appendFile("log.txt", "Actors: " + body.Actors + "\n", function () {});
+      fs.appendFile("log.txt", "Title: " + body.Title + "\n", function () { });
+      fs.appendFile("log.txt", "Release Year: " + body.Year + "\n", function () { });
+      fs.appendFile("log.txt", "IMdB Rating: " + body.imdbRating + "\n", function () { });
+      fs.appendFile("log.txt", "Country: " + body.Country + "\n", function () { });
+      fs.appendFile("log.txt", "Language: " + body.Language + "\n", function () { });
+      fs.appendFile("log.txt", "Plot: " + body.Plot + "\n", function () { });
+      fs.appendFile("log.txt", "Actors: " + body.Actors + "\n", function () { });
     }
     else {
       console.log("Error occurred.");
@@ -109,17 +116,18 @@ function omdbCommand() {
   });
 }
 
-// do-what-it-says
-if (command === "do-what-it-says") {
-  fs.readFile('random.txt', "utf8", function (error, data) {
-    if (!error) {
-      var text = data.split(',');
-      console.log(text[1]);
-      title = text[1];
-      spotifySong(title);
-    }
-    else {
-      console.log("Error occurred.");
-    };
-  });
-};
+function doWhatItSays() {
+  if (command === "do-what-it-says") {
+    fs.readFile('random.txt', "utf8", function (error, data) {
+      if (!error) {
+        var text = data.split(',');
+        console.log(text[1]);
+        title = text[1];
+        spotifySong(title);
+      }
+      else {
+        console.log("Error occurred.");
+      };
+    });
+  };
+}
