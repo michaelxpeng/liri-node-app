@@ -50,7 +50,8 @@ function showTweets() {
         var date = tweets[i].created_at;
         console.log("@fauxmscott: " + tweets[i].text + " Created At: " + date.substring(0, 19));
 
-        fs.appendFile("log.txt", "@fauxmscott: " + tweets[i].text + " Created At: " + date.substring(0, 19) + "\n", function () { });
+        fs.appendFile("log.txt", "@fauxmscott: " + tweets[i].text + " Created At: " + date.substring(0, 19) + "\n", function () {});
+        fs.appendFile("log.txt", "--------------------\n", function () {});
       };
     }
     else {
@@ -75,10 +76,11 @@ function spotifySong() {
         console.log("Preview URL: " + trackData.preview_url);
         console.log("Album: " + trackData.album.name);
 
-        fs.appendFile("log.txt", "Artist: " + trackData.artists[0].name + "\n", function () { });
-        fs.appendFile("log.txt", "Song: " + trackData.name + "\n", function () { });
-        fs.appendFile("log.txt", "Preview URL: " + trackData.preview_url + "\n", function () { });
-        fs.appendFile("log.txt", "Album: " + trackData.album.name + "\n", function () { });
+        fs.appendFile("log.txt", "Artist: " + trackData.artists[0].name + "\n", function () {});
+        fs.appendFile("log.txt", "Song: " + trackData.name + "\n", function () {});
+        fs.appendFile("log.txt", "Preview URL: " + trackData.preview_url + "\n", function () {});
+        fs.appendFile("log.txt", "Album: " + trackData.album.name + "\n", function () {});
+        fs.appendFile("log.txt", "--------------------\n", function () {});
       }
     }
     else {
@@ -102,13 +104,14 @@ function omdbMovie() {
       console.log("Plot: " + body.Plot);
       console.log("Actors: " + body.Actors);
 
-      fs.appendFile("log.txt", "Title: " + body.Title + "\n", function () { });
-      fs.appendFile("log.txt", "Release Year: " + body.Year + "\n", function () { });
-      fs.appendFile("log.txt", "IMdB Rating: " + body.imdbRating + "\n", function () { });
-      fs.appendFile("log.txt", "Country: " + body.Country + "\n", function () { });
-      fs.appendFile("log.txt", "Language: " + body.Language + "\n", function () { });
-      fs.appendFile("log.txt", "Plot: " + body.Plot + "\n", function () { });
-      fs.appendFile("log.txt", "Actors: " + body.Actors + "\n", function () { });
+      fs.appendFile("log.txt", "Title: " + body.Title + "\n", function () {});
+      fs.appendFile("log.txt", "Release Year: " + body.Year + "\n", function () {});
+      fs.appendFile("log.txt", "IMdB Rating: " + body.imdbRating + "\n", function () {});
+      fs.appendFile("log.txt", "Country: " + body.Country + "\n", function () {});
+      fs.appendFile("log.txt", "Language: " + body.Language + "\n", function () {});
+      fs.appendFile("log.txt", "Plot: " + body.Plot + "\n", function () {});
+      fs.appendFile("log.txt", "Actors: " + body.Actors + "\n", function () {});
+      fs.appendFile("log.txt", "--------------------\n", function () {});
     }
     else {
       console.log("Error occurred.");
