@@ -58,7 +58,6 @@ function showTweets() {
       console.log("Error occurred.");
     };
   });
-
 };
 
 function spotifySong() {
@@ -123,10 +122,31 @@ function doWhatItSays() {
   if (command === "do-what-it-says") {
     fs.readFile('random.txt', "utf8", function (error, data) {
       if (!error) {
-        var text = data.split(',');
-        console.log(text[1]);
+        var line = data.split("\n");
+        // console.log(line);
+        // console.log(line.length);
+        var random = Math.floor(Math.random() * line.length);
+        // console.log(random);
+        var text = line[random].split(",");
+        // console.log(text);
+        // console.log(text[0]);
+        // console.log(text[1]);
+        var randomCommand = text [0];
         title = text[1];
-        spotifySong(title);
+
+        switch (randomCommand) {
+          case "my-tweets":
+            showTweets(title);
+            break;
+        
+          case "spotify-this-song":
+            spotifySong(title);
+            break;
+        
+          case "movie-this":
+            omdbMovie(title);
+            break;
+        }
       }
       else {
         console.log("Error occurred.");
